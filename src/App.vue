@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed} from "vue";
 import BlogPost from "./components/BlogPost.vue";
 import PaginatePost from "./components/PaginatePost.vue"
 
@@ -25,22 +25,22 @@ const prev = () => {
     fin.value -= postXpage
 }
 
-
+const maxLength = computed(()=> {
+    return posts.value.length
+})
 </script>
 
 <template>
     <div class="app-container">
         <div class="post-container">
             <h1>Mi post favorito: {{ favorito }}</h1>
-            <!-- <v-btn @click="next">Next Provisorio</v-btn>
-            <v-btn @click="previus">Previus Provisorio</v-btn> -->
-            <PaginatePost @next="next" @prev="prev"></PaginatePost>
+            <PaginatePost @next="next" @prev="prev" :inicio="inicio" :fin="fin" :maxLength="maxLength"></PaginatePost>
             <BlogPost v-for="post in posts.slice(inicio, fin)"
             :key = post.id
             :id = post.id
             :title = post.title
             :body = post.body
-            ></BlogPost>
+            > </BlogPost>
         </div>
     </div>
 </template>
